@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locker Room - Secure Vault</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="light-mode">
+
+    <!-- Custom Title Bar -->
+    <div class="custom-title-bar">
+        <div class="window-controls">
+            <div class="control-btn red" id="closeBtn"></div>
+            <div class="control-btn yellow" id="minBtn"></div>
+            <div class="control-btn green" id="maxBtn"></div>
+        </div>
+        <div class="app-title">
+            <img src="assets/logo.png" class="circular-logo-mini" alt="Locker Room Logo">
+            <span>Locker Room</span>
+        </div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button id="themeToggle" class="toggle-btn">
+            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun"></i>
+        </button>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-lock"></i>
+                    <span>Locker Room</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="vault">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>My Vault</span>
+                </a>
+                <a href="#" class="nav-item" data-page="passwords">
+                    <i class="fas fa-key"></i>
+                    <span>Passwords</span>
+                    <span class="nav-badge" id="passwordCount">0</span>
+                </a>
+                <a href="#" class="nav-item" data-page="files">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>Files</span>
+                    <span class="nav-badge" id="fileCount">0</span>
+                </a>
+                <a href="#" class="nav-item" data-page="notes">
+                    <i class="fas fa-sticky-note"></i>
+                    <span>Private Notes</span>
+                    <span class="nav-badge" id="noteCount">0</span>
+                </a>
+                <a href="#" class="nav-item" data-page="favorites">
+                    <i class="fas fa-star"></i>
+                    <span>Favorites</span>
+                </a>
+                <a href="#" class="nav-item" data-page="trash">
+                    <i class="fas fa-trash"></i>
+                    <span>Trash</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="storage-info">
+                    <div class="storage-header">
+                        <i class="fas fa-database"></i>
+                        <span>Storage Used</span>
+                    </div>
+                    <div class="storage-bar">
+                        <div class="storage-progress" id="storageProgress" style="width: 0%"></div>
+                    </div>
+                    <div class="storage-stats">
+                        <span id="storageUsed">0 MB</span>
+                        <span id="storageTotal">/ 5 GB</span>
+                    </div>
+                </div>
+                
+                <div class="user-info" id="userInfo">
+                    <!-- User data will be populated here -->
+                </div>
+
+                <button id="logout" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Secure Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search passwords, files, notes..." id="globalSearch">
+                    <div class="search-shortcut">⌘K</div>
+                </div>
+
+                <div class="top-actions">
+                    <button class="action-btn" id="quickAddBtn">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="action-btn" id="notificationsBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge" id="notificationBadge">0</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Quick Add Menu -->
+            <div class="quick-add-menu" id="quickAddMenu">
+                <div class="quick-add-header">
+                    <h3>Add to Vault</h3>
+                    <button class="close-btn"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="quick-add-options">
+                    <div class="quick-option" data-type="password">
+                        <div class="option-icon blue">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <div class="option-details">
+                            <h4>New Password</h4>
+                            <p>Save login credentials</p>
+                        </div>
+                    </div>
+                    <div class="quick-option" data-type="file">
+                        <div class="option-icon green">
+                            <i class="fas fa-file-upload"></i>
+                        </div>
+                        <div class="option-details">
+                            <h4>Upload File</h4>
+                            <p>Secure file storage</p>
+                        </div>
+                    </div>
+                    <div class="quick-option" data-type="note">
+                        <div class="option-icon purple">
+                            <i class="fas fa-sticky-note"></i>
+                        </div>
+                        <div class="option-details">
+                            <h4>Private Note</h4>
+                            <p>Encrypted text note</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Content Area - Empty Templates -->
+            <div class="content-area" id="contentArea">
+                <!-- Vault Overview Page -->
+                <div class="page active" id="vault-page">
+                    <div class="welcome-section">
+                        <h1>Welcome to your Vault</h1>
+                        <p>Your secure digital locker for passwords, files, and notes.</p>
+                    </div>
+
+                    <!-- Stats Cards - Will be populated dynamically -->
+                    <div class="vault-stats" id="vaultStats">
+                        <div class="stat-card">
+                            <div class="stat-icon blue">
+                                <i class="fas fa-key"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Passwords</h3>
+                                <p class="stat-number" id="totalPasswords">0</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon green">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Files</h3>
+                                <p class="stat-number" id="totalFiles">0</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon purple">
+                                <i class="fas fa-sticky-note"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Notes</h3>
+                                <p class="stat-number" id="totalNotes">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <h2>Quick Actions</h2>
+                        <div class="quick-actions-grid">
+                            <button class="quick-action-item" data-action="password">
+                                <i class="fas fa-plus-circle"></i>
+                                <span>Add Password</span>
+                            </button>
+                            <button class="quick-action-item" data-action="file">
+                                <i class="fas fa-upload"></i>
+                                <span>Upload File</span>
+                            </button>
+                            <button class="quick-action-item" data-action="note">
+                                <i class="fas fa-pen"></i>
+                                <span>New Note</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Recent Items Container -->
+                    <div class="recent-section">
+                        <h2>Recent Activity</h2>
+                        <div class="recent-list" id="recentList">
+                            <!-- Recent items will be populated here -->
+                            <p class="empty-state">No recent activity</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Passwords Page -->
+                <div class="page" id="passwords-page">
+                    <div class="page-header">
+                        <h1>Passwords</h1>
+                        <button class="primary-btn" id="addPasswordBtn">
+                            <i class="fas fa-plus"></i> Add Password
+                        </button>
+                    </div>
+
+                    <div class="passwords-grid" id="passwordsList">
+                        <!-- Password items will be populated here -->
+                        <div class="empty-state">
+                            <i class="fas fa-key"></i>
+                            <p>No passwords saved yet</p>
+                            <button class="primary-btn" id="emptyAddPassword">Add your first password</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Files Page -->
+                <div class="page" id="files-page">
+                    <div class="page-header">
+                        <h1>Files</h1>
+                        <button class="primary-btn" id="uploadFileBtn">
+                            <i class="fas fa-upload"></i> Upload File
+                        </button>
+                    </div>
+
+                    <div class="files-list" id="filesList">
+                        <!-- File items will be populated here -->
+                        <div class="empty-state">
+                            <i class="fas fa-file-upload"></i>
+                            <p>No files uploaded yet</p>
+                            <button class="primary-btn" id="emptyUploadFile">Upload your first file</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Private Notes Page -->
+                <div class="page" id="notes-page">
+                    <div class="page-header">
+                        <h1>Private Notes</h1>
+                        <button class="primary-btn" id="addNoteBtn">
+                            <i class="fas fa-plus"></i> New Note
+                        </button>
+                    </div>
+
+                    <div class="notes-grid" id="notesList">
+                        <!-- Note items will be populated here -->
+                        <div class="empty-state">
+                            <i class="fas fa-sticky-note"></i>
+                            <p>No notes created yet</p>
+                            <button class="primary-btn" id="emptyAddNote">Create your first note</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Favorites Page -->
+                <div class="page" id="favorites-page">
+                    <div class="page-header">
+                        <h1>Favorites</h1>
+                        <p>Your favorite items, all in one place</p>
+                    </div>
+                    <div class="favorites-list" id="favoritesList">
+                        <div class="empty-state">
+                            <i class="fas fa-star"></i>
+                            <p>No favorites yet</p>
+                            <p>Click the star icon on any item to add it to favorites</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trash Page -->
+                <div class="page" id="trash-page">
+                    <div class="page-header">
+                        <h1>Trash Bin</h1>
+                        <button class="primary-btn" id="emptyTrashBtn" style="background: #dc3545;" onclick="emptyTrash()">
+                            <i class="fas fa-eraser"></i> Empty Trash
+                        </button>
+                    </div>
+                    <div class="trash-list" id="trashList">
+                        <div class="empty-state">
+                            <i class="fas fa-trash-alt"></i>
+                            <p>Trash is empty</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Password Modal -->
+    <div class="modal" id="addPasswordModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Password</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <form class="password-form" id="passwordForm">
+                <div class="form-group">
+                    <label>Service / Website</label>
+                    <input type="text" id="serviceName" placeholder="e.g., Gmail, Netflix" required>
+                </div>
+                <div class="form-group">
+                    <label>Username / Email</label>
+                    <input type="email" id="username" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="password-input-group">
+                        <input type="password" id="password" placeholder="Enter password" required>
+                        <button type="button" class="generate-password" id="generatePassword">Generate</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Notes (Optional)</label>
+                    <textarea id="passwordNotes" placeholder="Additional notes"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Save Password</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Note Modal -->
+    <div class="modal" id="addNoteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Private Note</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <form class="note-form" id="noteForm">
+                <div class="form-group">
+                    <label>Note Title</label>
+                    <input type="text" id="noteTitle" placeholder="e.g., Bank Details, WiFi Password" required>
+                </div>
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea id="noteContent" placeholder="Write your note here..." rows="8" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Save Note</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- File Upload Modal -->
+    <div class="modal" id="uploadFileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Upload File</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h3>Drag & Drop or Click to Upload</h3>
+                <p>Max file size: 100 MB</p>
+                <input type="file" id="fileInput" hidden multiple>
+                <button class="primary-btn" id="selectFileBtn">Select Files</button>
+            </div>
+            <div class="upload-preview" id="uploadPreview"></div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

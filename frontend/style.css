@@ -1,0 +1,760 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s ease;
+    position: relative;
+}
+
+/* Light Mode Styles */
+body.light-mode {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.toggle-btn {
+    background: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.toggle-btn i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.4rem;
+    transition: all 0.3s ease;
+}
+
+.toggle-btn .fa-moon {
+    color: #2c3e50;
+    opacity: 1;
+}
+
+.toggle-btn .fa-sun {
+    color: #f1c40f;
+    opacity: 0;
+}
+
+body.dark-mode .toggle-btn .fa-moon {
+    opacity: 0;
+}
+
+body.dark-mode .toggle-btn .fa-sun {
+    opacity: 1;
+}
+
+/* Container */
+.container {
+    display: flex;
+    width: 900px;
+    max-width: 95%;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .container {
+    background: #2a2a3a;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Login Card */
+.login-card {
+    flex: 1;
+    padding: 40px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .login-card {
+    background: #2a2a3a;
+}
+
+.locker-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.locker-icon i {
+    font-size: 40px;
+    color: white;
+}
+
+.login-card h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 2.2rem;
+}
+
+body.dark-mode .login-card h1 {
+    color: white;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+}
+
+body.dark-mode .subtitle {
+    color: #aaa;
+}
+
+/* Input Groups */
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px 15px 15px 45px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+body.dark-mode .input-group input {
+    background: #3a3a4a;
+    border-color: #4a4a5a;
+    color: white;
+}
+
+body.dark-mode .input-group input::placeholder {
+    color: #aaa;
+}
+
+.input-group input:focus {
+    border-color: #667eea;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 1.1rem;
+}
+
+body.dark-mode .input-icon {
+    color: #aaa;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+body.dark-mode .toggle-password {
+    color: #aaa;
+}
+
+/* Remember & Forgot */
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.remember {
+    color: #666;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+body.dark-mode .remember {
+    color: #aaa;
+}
+
+.remember input {
+    margin-right: 5px;
+    accent-color: #667eea;
+}
+
+.forgot-link {
+    color: #667eea;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.forgot-link:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+/* Login Button */
+.login-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+}
+
+.login-btn:active {
+    transform: translateY(0);
+}
+
+.login-btn i {
+    transition: transform 0.3s ease;
+}
+
+.login-btn:hover i {
+    transform: translateX(5px);
+}
+
+/* Message Container */
+.message-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#message {
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+#message.success {
+    background: rgba(46, 204, 113, 0.1);
+    color: #27ae60;
+}
+
+#message.error {
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+body.dark-mode #message.success {
+    background: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+}
+
+body.dark-mode #message.error {
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+}
+
+/* Footer Links */
+.footer-links {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+}
+
+body.dark-mode .footer-links {
+    color: #aaa;
+}
+
+.footer-links a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+/* Feature Panel */
+.feature-panel {
+    flex: 1;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-panel::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(45deg);
+    top: -50%;
+    left: -50%;
+}
+
+.feature-content {
+    position: relative;
+    z-index: 1;
+    color: white;
+}
+
+.feature-content h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.feature-content p {
+    margin-bottom: 30px;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+.feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.1rem;
+}
+
+.feature-item i {
+    font-size: 1.5rem;
+    width: 30px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 95%;
+    }
+    
+    .feature-panel {
+        display: none;
+    }
+    
+    .login-card {
+        padding: 30px 20px;
+    }
+    
+    .theme-toggle {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .toggle-btn {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-card {
+    animation: fadeInUp 0.6s ease;
+}
+
+
+/* Mode Toggle Buttons */
+.mode-toggle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    background: #f0f4f8;
+    padding: 5px;
+    border-radius: 50px;
+}
+
+body.dark-mode .mode-toggle {
+    background: #3a3a4a;
+}
+
+.mode-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    color: #666;
+}
+
+.mode-btn.active {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+body.dark-mode .mode-btn {
+    color: #aaa;
+}
+
+body.dark-mode .mode-btn.active {
+    color: white;
+}
+
+/* Confirm Password field styling */
+#confirmPasswordGroup {
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.toggle-confirm-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+body.dark-mode .toggle-confirm-password {
+    color: #aaa;
+}
+
+/* Password strength indicator */
+.password-strength {
+    margin-top: 5px;
+    font-size: 0.8rem;
+    padding: 5px;
+    border-radius: 5px;
+    display: none;
+}
+
+.password-strength.show {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+.password-strength.weak {
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+}
+
+.password-strength.medium {
+    color: #f39c12;
+    background: rgba(243, 156, 18, 0.1);
+}
+
+.password-strength.strong {
+    color: #27ae60;
+    background: rgba(39, 174, 96, 0.1);
+}
+
+/* Loading animation for button */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.fa-spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* Success/Error message enhancements */
+#message {
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+#message.success {
+    background: rgba(46, 204, 113, 0.15);
+    color: #27ae60;
+    border-left: 4px solid #27ae60;
+}
+
+#message.error {
+    background: rgba(231, 76, 60, 0.15);
+    color: #e74c3c;
+    border-left: 4px solid #e74c3c;
+}
+
+#message.info {
+    background: rgba(52, 152, 219, 0.15);
+    color: #3498db;
+    border-left: 4px solid #3498db;
+}
+
+/* ===== RECOVERY/EMERGENCY PASSWORD STYLES ===== */
+
+/* Recovery Password Group */
+.recovery-group {
+    border-left: 3px solid #e74c3c;
+    padding-left: 5px;
+    background: rgba(231, 76, 60, 0.02);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.recovery-group:hover {
+    background: rgba(231, 76, 60, 0.05);
+}
+
+.recovery-icon {
+    color: #e74c3c !important;
+}
+
+/* Toggle buttons for recovery */
+.toggle-recovery-password,
+.toggle-confirm-recovery {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+.toggle-recovery-password:hover,
+.toggle-confirm-recovery:hover {
+    color: #e74c3c;
+}
+
+/* Recovery Hint */
+.recovery-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0 15px 0;
+    padding: 10px 12px;
+    background: rgba(231, 76, 60, 0.1);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #e74c3c;
+    animation: slideDown 0.3s ease;
+}
+
+.recovery-hint i {
+    font-size: 1rem;
+}
+
+body.dark-mode .recovery-hint {
+    background: rgba(231, 76, 60, 0.2);
+    color: #ff6b6b;
+}
+
+/* Security Badge */
+.security-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 8px 12px;
+    background: rgba(46, 204, 113, 0.1);
+    border-radius: 30px;
+    font-size: 0.85rem;
+    color: #27ae60;
+}
+
+.security-badge i {
+    font-size: 1rem;
+}
+
+body.dark-mode .security-badge {
+    background: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+}
+
+/* Info Card */
+.info-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 30px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.info-card i {
+    font-size: 1.5rem;
+    color: #f1c40f;
+}
+
+.info-card strong {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 1rem;
+}
+
+.info-card p {
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+/* Feature Panel Enhancements */
+.feature-item i.fa-ghost {
+    color: #e74c3c;
+}
+
+/* Mode Toggle Buttons (already in your CSS) */
+.mode-toggle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    background: #f0f4f8;
+    padding: 5px;
+    border-radius: 50px;
+}
+
+.mode-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    color: #666;
+}
+
+.mode-btn.active {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.mode-btn:hover:not(.active) {
+    background: rgba(102, 126, 234, 0.1);
+}
+
+body.dark-mode .mode-btn {
+    color: #aaa;
+}
+
+/* Animations */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Confirm Password Groups */
+#confirmPasswordGroup,
+#confirmRecoveryGroup,
+#recoveryPasswordGroup,
+#recoveryHint {
+    animation: slideDown 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .security-badge {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+    
+    .info-card {
+        padding: 12px;
+    }
+    
+    .info-card strong {
+        font-size: 0.9rem;
+    }
+    
+    .info-card p {
+        font-size: 0.75rem;
+    }
+    
+    .recovery-hint {
+        font-size: 0.75rem;
+    }
+}

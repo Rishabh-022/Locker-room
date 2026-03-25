@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locker Room - Secure Access</title>
+    <link rel="stylesheet" href="frontend/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="light-mode">
+
+    <div class="theme-toggle">
+        <button id="themeToggle" class="toggle-btn">
+            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun"></i>
+        </button>
+    </div>
+
+    <div class="container">
+        <div class="login-card">
+            <div class="locker-icon">
+                <i class="fas fa-lock"></i>
+            </div>
+            
+            <h1>Locker Room</h1>
+            <p class="subtitle" id="formSubtitle">Login to your secure vault</p>
+
+            <!-- Mode Toggle Buttons -->
+            <div class="mode-toggle">
+                <button type="button" id="loginModeBtn" class="mode-btn active">Login</button>
+                <button type="button" id="registerModeBtn" class="mode-btn">Register</button>
+            </div>
+
+            <form id="authForm">
+                <div class="input-group">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="username" placeholder="Username" required />
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" placeholder="Password" required />
+                    <i class="fas fa-eye toggle-password"></i>
+                </div>
+
+                <!-- Emergency/Recovery Password field (only shows in Register mode) -->
+                <div class="input-group recovery-group" id="recoveryPasswordGroup" style="display: none;">
+                    <i class="fas fa-shield-alt input-icon recovery-icon"></i>
+                    <input type="password" id="recoveryPassword" placeholder="Emergency Password" />
+                    <i class="fas fa-eye toggle-recovery-password"></i>
+                </div>
+
+                <!-- Confirm Password field (only shows in Register mode) -->
+                <div class="input-group" id="confirmPasswordGroup" style="display: none;">
+                    <i class="fas fa-check-circle input-icon"></i>
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password" />
+                    <i class="fas fa-eye toggle-confirm-password"></i>
+                </div>
+
+                <!-- Confirm Recovery field (only shows in Register mode) -->
+                <div class="input-group" id="confirmRecoveryGroup" style="display: none;">
+                    <i class="fas fa-check-double input-icon"></i>
+                    <input type="password" id="confirmRecovery" placeholder="Confirm Emergency Password" />
+                    <i class="fas fa-eye toggle-confirm-recovery"></i>
+                </div>
+
+                <!-- Recovery Hint (only shows in Register mode) -->
+                <div class="recovery-hint" id="recoveryHint" style="display: none;">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Use this if you're ever forced to unlock your vault show other dashboard</span>
+                </div>
+
+                <div class="remember-forgot" id="rememberForgotSection">
+                    <label class="remember">
+                        <input type="checkbox" id="remember"> Remember me
+                    </label>
+                    <a href="#" class="forgot-link">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="login-btn" id="submitBtn">
+                    <span id="submitBtnText">Login</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <div class="message-container">
+                <p id="message"></p>
+            </div>
+
+            <!-- Security Badge -->
+            <div class="security-badge">
+                <i class="fas fa-shield-alt"></i>
+                <span>Emergency password ready</span>
+            </div>
+        </div>
+
+        <div class="feature-panel">
+            <div class="feature-content">
+                <h2 id="featureTitle">Welcome Back!</h2>
+                <p id="featureText">Access your personal locker and manage your belongings securely.</p>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Real Vault</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-ghost"></i>
+                        <span>Decoy Vault</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-bell"></i>
+                        <span>Instant Notifications</span>
+                    </div>
+                </div>
+                
+                <!-- Info Card -->
+                <div class="info-card">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>Plausible Deniability</strong>
+                        <p>Protect your sensitive document</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="frontend/app.js"></script>
+</body>
+</html>
